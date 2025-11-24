@@ -1,4 +1,5 @@
 let countPage = 8;
+let lst = [];
 async function getProduct() {
   const url = "https://fakestoreapi.com/products";
   const loading = document.querySelector(".loading");
@@ -9,7 +10,7 @@ async function getProduct() {
   const response = await fetch(url);
   const products = await response.json();
   const productsToShow = products.slice(0, countPage);
-
+  lst = products;
   list.innerHTML = "";
   loading.style.display = "none";
   list.style.display = "grid";
@@ -65,4 +66,35 @@ function showProductItem(product) {
   modalPrice.innerHTML = price;
   console.log(product);
 }
+const input = document.querySelector("#nav_search");
+input.addEventListener("input", (e) => {
+  const search = document.querySelector(".search__result");
+  search.innerHTML = "";
+
+  const searchValue = e.target.value;
+  if (searchValue) {
+    search.style.display = "flex";
+  } else {
+    search.style.display = "none";
+  }
+
+  const result = lst.filter((item) => {
+    return item.title.toLowerCase().includes(searchValue);
+  });
+
+  result.forEach((product) => {
+    const { id, title, price, image, description } = product;
+    const btn = document.createElement("button");
+    btn.classList.add("search__btn");
+    btn.addEventListener("click", (e) => {
+      showProductItem(product);
+      $("#exampleModal").modal("show");
+    });
+    btn.innerHTML = `
+    <img src="${image}" class="search__img" alt="">
+                            <p class="search__result-title">${title}</p>
+    `;
+    search.appendChild(btn);
+  });
+});
 getProduct();
