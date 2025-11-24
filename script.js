@@ -81,20 +81,30 @@ input.addEventListener("input", (e) => {
   const result = lst.filter((item) => {
     return item.title.toLowerCase().includes(searchValue);
   });
-
-  result.forEach((product) => {
-    const { id, title, price, image, description } = product;
-    const btn = document.createElement("button");
-    btn.classList.add("search__btn");
-    btn.addEventListener("click", (e) => {
-      showProductItem(product);
-      $("#exampleModal").modal("show");
-    });
-    btn.innerHTML = `
+  if (result.length > 0) {
+    result.forEach((product) => {
+      const { id, title, price, image, description } = product;
+      const btn = document.createElement("button");
+      btn.classList.add("search__btn");
+      btn.addEventListener("click", (e) => {
+        showProductItem(product);
+        $("#exampleModal").modal("show");
+      });
+      btn.innerHTML = `
     <img src="${image}" class="search__img" alt="">
                             <p class="search__result-title">${title}</p>
     `;
+      search.appendChild(btn);
+    });
+  } else {
+    const btn = document.createElement("button");
+    btn.style = `
+    height:100%;
+    `;
+    btn.innerHTML = `
+                            <p class="search__result-empty">Không tìm thấy sản phẩm</p>
+    `;
     search.appendChild(btn);
-  });
+  }
 });
 getProduct();

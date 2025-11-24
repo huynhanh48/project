@@ -156,6 +156,10 @@ button{
 	display: none;
 
 }
+.search__result-empty{
+	font-size: 1.8rem;
+	font-weight: 400;
+}
 .search__result-title{
 	font-size: 1.2rem;
 	text-align: start;
