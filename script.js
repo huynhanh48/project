@@ -1,5 +1,23 @@
-let countPage = 8;
+let pageSize = 8;
+let current = 1;
+let previous, next;
+let start = (current - 1) * pageSize;
+let end = current * pageSize;
+let count;
 let lst = [];
+window.addEventListener("resize", () => {
+  const newSize = window.innerWidth <= 991 ? 4 : 8;
+
+  if (newSize !== pageSize) {
+    pageSize = newSize;
+    current = 1;
+
+    start = 0;
+    end = pageSize;
+
+    init(); // load lại giao diện
+  }
+});
 async function getProduct() {
   const url = "https://fakestoreapi.com/products";
   const loading = document.querySelector(".loading");
@@ -9,7 +27,8 @@ async function getProduct() {
 
   const response = await fetch(url);
   const products = await response.json();
-  const productsToShow = products.slice(0, countPage);
+  count = Math.ceil(products.length / pageSize);
+  const productsToShow = products.slice(start, end);
   lst = products;
   list.innerHTML = "";
   loading.style.display = "none";
@@ -66,12 +85,13 @@ function showProductItem(product) {
   modalPrice.innerHTML = price;
   console.log(product);
 }
+//  --------search product--------
 const input = document.querySelector("#nav_search");
 input.addEventListener("input", (e) => {
   const search = document.querySelector(".search__result");
   search.innerHTML = "";
 
-  const searchValue = e.target.value;
+  const searchValue = e.target.value.toLowerCase();
   if (searchValue) {
     search.style.display = "flex";
   } else {
@@ -107,4 +127,45 @@ input.addEventListener("input", (e) => {
     search.appendChild(btn);
   }
 });
-getProduct();
+const menu = document.querySelector(".toggle__menu");
+menu.addEventListener("click", () => {
+  const overlay = document.querySelector(".menu__overlay");
+  const drawer = document.querySelector(".menu__drawer");
+  overlay.style.display = "block";
+  drawer.style.display = "block";
+  overlay.addEventListener("click", () => {
+    overlay.style.display = "none";
+    drawer.style.display = "none";
+  });
+});
+function pagingationNav() {
+  const pagination = document.querySelector(".pagination");
+  pagination.innerHTML = "";
+
+  previous = 1;
+  next = count;
+
+  for (let i = previous; i <= next; i++) {
+    const li = document.createElement("li");
+    li.classList.add("page-item");
+
+    li.innerHTML = `
+      <a class="page-link" href="#">${i}</a>
+    `;
+
+    li.addEventListener("click", async () => {
+      current = i;
+      start = (current - 1) * pageSize;
+      end = current * pageSize;
+      await getProduct();
+    });
+
+    pagination.appendChild(li);
+  }
+}
+async function init() {
+  await getProduct();
+  pagingationNav();
+}
+
+init();

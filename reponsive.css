@@ -1,0 +1,148 @@
+/* PC */
+@media screen and (min-width: 992px) {
+    .toggle__menu{
+        display: none;
+    }
+    .mobile__header{
+        display: none;
+    }
+}
+/* Tablet Mobile */
+@media screen and (max-width: 991px) {
+    .header{
+         width: 100%;
+    }
+    .Logo{
+        display: none;
+    }
+    .menu__drawer ul{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .menu__drawer ul li{
+        position: relative;
+        display: flex;
+        padding-left: 40px;
+        justify-content: start;
+        align-items: center;
+        height:  70px;
+    }
+    .menu__drawer ul li::after
+    {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 90%;
+        height: 1px;
+        transform: translateX(5%);
+        background:grey;
+    }
+    .menu__drawer ul a{
+        font-size: 2rem;
+    }
+    .content{
+        width: calc(100% - 34px);
+        margin: 0;
+    }
+    .header__nav  ul {
+        display: none;
+    }
+    .hero__product{
+        grid-template-columns: repeat(2,1fr);
+        grid-template-rows: repeat(2,250px);
+    }
+    .nav__search{
+        margin: 0 auto;
+    }
+    .toggle__menu{
+        display: inline-block;
+        margin-left: 20px;
+    }
+    .toggle__menu{
+        cursor: pointer;
+    }
+    .toggle__menu i{
+        font-size: 2rem;
+    }
+    .mobile__header{
+        position: relative;
+        z-index: 1;
+    }
+    .menu__overlay{
+        display: none;
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background:rgba(0, 0, 0, 0.3);
+    }
+    .menu__drawer{
+        display: none;
+        position: fixed;
+        background: white;
+        height: 100vh;
+        width: 50%;
+        left: 0;
+        top: 0;
+        z-index: 2;
+    }
+
+}
+/* Tablet */
+@media screen and (min-width: 768px)  and  (max-width:991px){
+    
+}
+/* Mobile */
+@media screen and (max-width: 767px) {
+    .hero__product{
+        padding: 10px;
+    }
+    .toggle__menu{
+        margin: 0 20px 0 10px;
+    }
+    .Logo{
+        display: none;
+    }
+    .product__title{
+        display: none;
+    }
+    .product__button-wrap{
+        display: flex;
+        justify-content: center;
+    }
+    .nav__search{
+        margin: 0 auto;
+    }
+    .toggle__menu{
+        cursor: pointer;
+    }
+    .toggle__menu i{
+        font-size: 2rem;
+    }
+    .mobile__header{
+        position: relative;
+        z-index: 1;
+    }
+    .menu__overlay{
+        display: none;
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background:rgba(0, 0, 0, 0.3);
+    }
+    .menu__drawer{
+        display: none;
+        position: fixed;
+        background: white;
+        height: 100vh;
+        width: 50%;
+        left: 0;
+        top: 0;
+        z-index: 2;
+    }
+}

@@ -62,7 +62,7 @@ img {
   object-fit: cover; 
 }
 .content {
-	width: 1170px;
+	width: calc(100% - 34px);
 	margin: auto;
 }
 a{
@@ -73,7 +73,15 @@ button{
 	outline: none;
 }
 /* -----------------Header--------------- */
-
+.product__sort{
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+.product__sort i{
+	font-size: 1.8rem;
+	cursor: pointer;
+}
 .header__nav{
 	padding-top: 10px;
 	display: flex;
@@ -81,9 +89,6 @@ button{
 	align-items: center;
 	/* background-color: red; */
 	padding: 10px;
-
-
-
 }
 .header__nav ul{
 	display: flex;
@@ -298,4 +303,13 @@ button{
 	margin-top: 20px;
 	background-color: var(--primary-color);
 	color: white;
+}
+/* -----------------Pagination--------------- */
+.pagination__nav{
+	display: flex;
+	justify-content: center;
+}
+.pagination .page-link {
+    font-size: 1.2rem;     
+    padding: 10px 20px;   
 }
