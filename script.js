@@ -15,43 +15,44 @@ window.addEventListener("resize", () => {
     start = 0;
     end = pageSize;
 
-    init(); // load lại giao diện
+    init();
   }
 });
 async function getProduct() {
-  const url = "https://fakestoreapi.com/products";
-  const loading = document.querySelector(".loading");
-  const list = document.querySelector(".hero__product");
-  loading.style.display = "block";
-  list.style.display = "none";
+  try {
+    const url = "https://fakestoreapi.com/products";
+    const loading = document.querySelector(".loading");
+    const list = document.querySelector(".hero__product");
+    loading.style.display = "block";
+    list.style.display = "none";
 
-  const response = await fetch(url);
-  const products = await response.json();
-  count = Math.ceil(products.length / pageSize);
-  const productsToShow = products.slice(start, end);
-  lst = products;
-  list.innerHTML = "";
-  loading.style.display = "none";
-  list.style.display = "grid";
-  productsToShow.forEach((element) => {
-    const item = document.createElement("div");
-    item.classList.add("item");
+    const response = await fetch(url);
+    const products = await response.json();
+    count = Math.ceil(products.length / pageSize);
+    const productsToShow = products.slice(start, end);
+    lst = products;
+    list.innerHTML = "";
+    loading.style.display = "none";
+    list.style.display = "grid";
+    productsToShow.forEach((element) => {
+      const item = document.createElement("div");
+      item.classList.add("item");
 
-    const id = element.id;
-    const title = element.title;
-    const price = element.price;
-    const img = element.image;
-    const rate = Math.round(element.rating.rate);
-    let stars = "";
-    for (let i = 1; i <= 5; i++) {
-      if (i <= rate) {
-        stars += `<i class="fas fa-star" style="color: gold;"></i>`;
-      } else {
-        stars += `<i class="fas fa-star" style="color: #ccc;"></i>`;
+      const id = element.id;
+      const title = element.title;
+      const price = element.price;
+      const img = element.image;
+      const rate = Math.round(element.rating.rate);
+      let stars = "";
+      for (let i = 1; i <= 5; i++) {
+        if (i <= rate) {
+          stars += `<i class="fas fa-star" style="color: gold;"></i>`;
+        } else {
+          stars += `<i class="fas fa-star" style="color: #ccc;"></i>`;
+        }
       }
-    }
 
-    item.innerHTML = `
+      item.innerHTML = `
     <img class="product__img" src="${img}" alt="${title}">
     <span class="product__title">${title}</span>
     <div class="product__wrap">
@@ -63,12 +64,15 @@ async function getProduct() {
     </div>
         
   `;
-    const btn = item.querySelector(".product__button");
-    btn.addEventListener("click", () => {
-      showProductItem(element);
+      const btn = item.querySelector(".product__button");
+      btn.addEventListener("click", () => {
+        showProductItem(element);
+      });
+      list.appendChild(item);
     });
-    list.appendChild(item);
-  });
+  } catch (error) {
+    alert("API FAIL");
+  }
 }
 function showProductItem(product) {
   const { title, price, image, description } = product;
